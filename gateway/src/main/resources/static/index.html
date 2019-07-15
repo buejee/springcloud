@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>gateway</title>
+    <style type="text/css">
+        .box{border:1px solid #ddd;border-radius:2px;padding:10px;}
+    </style>
+    <script type="text/javascript" src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn-save").click(function () {
+                $.ajax({
+                    url:'/dispatch',
+                    type:'POST',
+                    data:$("#name").val(),
+                    dataType:'json',
+                    headers:{'Content-Type':"application/json"},
+                    success:function(data){
+                        console.log(data);
+                        data = data.map(function(item,i){
+                           return item.name;
+                        });
+                        $("#user-list").html(data.join("|"));
+                    }
+                });
+            });
+            $("#btn-get").click(function () {
+                $.ajax({
+                    url:'/get',
+                    type:'GET',
+                    success:function(data){
+                        $("#messagelist").html(data);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<h2>hello,springcloud</h2>
+<div id="container">
+    <div class="box">
+        <label>username</label>
+        <input type="text" name="name" id="name"/>
+        <input type="button" id="btn-save" value="save"/>
+        <div id="user-list"></div>
+    </div>
+    <div class="box">
+        <input type="button" id="btn-get" value="get message"/>
+        <div id="messagelist"></div>
+    </div>
+</div>
+</body>
+</html>
