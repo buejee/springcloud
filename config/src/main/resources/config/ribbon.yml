@@ -1,0 +1,2 @@
+springcloud:
+  message: this is a message from config server2
